@@ -28,10 +28,6 @@ paths:
                   type: integer
                   example: 10
                   description: "Number of search results to return. Maximum 500. Default 100"
-                useQueryExpansion:
-                  type: boolean
-                  example: false
-                  description: "Optional beta flag. If true, returns good results without Metaphor syntax"
                 includeDomains:
                   type: array
                   items:
@@ -224,3 +220,5 @@ components:
         score:
           type: float
           description: "A number from 0 to 1 representing similarity between the query/url and the result"
+
+
