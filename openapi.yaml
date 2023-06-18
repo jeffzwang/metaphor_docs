@@ -28,6 +28,10 @@ paths:
                   type: integer
                   example: 10
                   description: "Number of search results to return. Maximum 500. Default 100"
+                useQueryExpansion:
+                  type: boolean
+                  example: false
+                  description: "Optional beta flag. If true, returns good results without Metaphor syntax"
                 includeDomains:
                   type: array
                   items:
@@ -91,12 +95,17 @@ paths:
                           type: string
                           nullable: true
                           description: "If available, the author of the content. Nullable"
+                        score:
+                          type: number
+                          format: float
+                          description: "A number from 0 to 1 representing similarity between the query/url and the result"
               example:
                 results:
                   - title: "Google Search is Dying"
                     url: https://dkb.blog/p/google-search-is-dying
                     publishedDate: "2022-02-14"
                     author: "Dmitri Brereton"
+                    score: 0.5
       security:
         - apikey: []
   /findSimilar:
@@ -183,12 +192,17 @@ paths:
                           type: string
                           nullable: true
                           description: "If available, the author of the content. Nullable"
+                        score:
+                          type: number
+                          format: float
+                          description: "A number from 0 to 1 representing similarity between the query/url and the result"
               example:
                 results:
                   - title: "Misperceptions on Moloch"
                     url: "https://slatestarcodex.com/2014/08/01/misperceptions-on-moloch/"
                     publishedDate: "2014-08-01"
                     author: "Scott Alexander"
+                    score: 0.2
       security:
         - apikey: []
 
@@ -218,7 +232,8 @@ components:
           nullable: true
           description: "If available, the author of the content. Nullable"
         score:
-          type: float
+          type: number
+          format: float
           description: "A number from 0 to 1 representing similarity between the query/url and the result"
 
 
