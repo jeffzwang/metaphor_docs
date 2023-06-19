@@ -162,7 +162,6 @@ paths:
                   example: "2023-12-31T23:59:59Z"
               required:
                 - url
-
       responses:
         "200":
           description: OK
@@ -205,6 +204,52 @@ paths:
                     score: 0.2
       security:
         - apikey: []
+  /contents:
+    get:
+      operationId: getContents
+      summary: Get contents of documents
+      description: Retrieve contents of documents based on a list of document IDs.
+      parameters:
+        - in: query
+          name: ids
+          schema:
+            type: array
+            items:
+              type: string
+          required: true
+          description: "An array of document IDs obtained from either /search or /findSimilar endpoints."
+          example: ["0bU6rTFJWNyHxW2dp66ahQ", "1aI5kUIO8VuLxT3db47cnM"]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    description: "A list of document contents containing URL, title, and extract. In the future, we will support more content types."
+                    items:
+                      type: object
+                      properties:
+                        url:
+                          type: string
+                          format: uri
+                          description: "The URL of the document, which directs to the web page containing the content."
+                        title:
+                          type: string
+                          description: "The title of the document, typically representing the main heading of the content."
+                        content:
+                          type: string
+                          description: "The content of the document."
+              example:
+                results:
+                  - url: https://dkb.blog/p/google-search-is-dying
+                    title: "Google Search is Dying"
+                    content: "Google Search, once the crown jewel of the internet..."
+      security:
+        - apikey: []
 
 components:
   securitySchemes:
@@ -235,5 +280,3 @@ components:
           type: number
           format: float
           description: "A number from 0 to 1 representing similarity between the query/url and the result"
-
-
